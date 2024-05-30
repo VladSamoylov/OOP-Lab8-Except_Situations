@@ -467,9 +467,11 @@ int main() {
 			cerr << "Error <Current index don't find>" << endl;
 			cout << "Return the element of maximum masive index [" << index << "] = " << rn1[index] << endl;
 		}	
-
+		double size = 10000000000000000000;
 		try {
+			//p = new RealNumber[size];
 			p = new RealNumber[10];
+			delete[] p;
 		}
 		catch (ExceptionAlloc& er) {
 			er.Error();
