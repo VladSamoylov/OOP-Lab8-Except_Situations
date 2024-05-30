@@ -93,17 +93,7 @@ RealNumber::RealNumber() {
 RealNumber::RealNumber(const int& n) {
 
 	this->n = n;
-	try {
-		this->mas = new double[this->n];
-	}
-	catch (ExceptionAlloc& er) {
-		er.Error();
-		abort();
-	}
-	catch (bad_alloc) {
-		cout << "error\n";
-		abort();
-	}
+	this->mas = new double[this->n];
 	for (int i = 0; i < this->n; i++) {
 		this->mas[i] = (rand() % 21) - 10;
 	}
@@ -116,13 +106,7 @@ RealNumber::RealNumber(const int& n) {
 RealNumber::RealNumber(const RealNumber& rn) {
 
 	this->n = rn.n;
-	try {
-		this->mas = new double[this->n];
-	}
-	catch (ExceptionAlloc& er) {
-		er.Error();
-		abort();
-	}
+	this->mas = new double[this->n];
 	for (int i = 0; i < rn.n; i++) {
 		this->mas[i] = rn.mas[i];
 	}
@@ -135,13 +119,7 @@ void RealNumber::Generate() {
 
 	if (this->mas != nullptr) delete[] this->mas;
 	this->n = (rand() % 10) + 1;
-	try {
-		this->mas = new double[this->n];
-	}
-	catch (ExceptionAlloc& er) {
-		er.Error();
-		abort();
-	}
+	this->mas = new double[this->n];
 	for (int i = 0; i < this->n; i++) {
 		this->mas[i] = (rand() % 21) - 10;
 	}
@@ -176,14 +154,7 @@ RealNumber RealNumber::operator=(const RealNumber& rn) {
 
 	if (this->n != rn.n) {
 		if (this->mas != nullptr) delete[] this->mas;
-		this->n = rn.n;
-		try {
-			this->mas = new double[this->n];
-		}
-		catch (ExceptionAlloc& er) {
-			er.Error();
-			abort();
-		}
+		this->mas = new double[this->n];
 	}
 	for (int i = 0; i < rn.n; i++) {
 		this->mas[i] = rn.mas[i];
@@ -368,13 +339,7 @@ void RealNumber::LoadFromFile(const string& name) {
 
 		fin >> this->n;
 		if (this->mas != nullptr) delete[] this->mas;
-		try {
-			this->mas = new double[this->n];
-		}
-		catch (ExceptionAlloc& er) {
-			er.Error();
-			abort();
-		}
+		this->mas = new double[this->n];
 		for (int i = 0; i < this->n; i++) {
 			fin >> this->mas[i];
 		}
@@ -464,7 +429,8 @@ int main() {
 
 	srand(static_cast<unsigned int>(time(nullptr)));
 	int work = 1;
-	RealNumber rn1(2), rn2;
+	RealNumber rn1(2), rn2, rn3(2);
+	RealNumber* p;
 
 	int a, b;
 	
@@ -495,12 +461,20 @@ int main() {
 		cout << "rn2: "; rn2.Show();
 		
 		try {
-			cout << "\nGet 4 element of rn2[4]: " << rn2[4] << endl;
+			cout << "\nGet 4 element of rn1[4]: " << rn1[4] << endl;
 		}
 		catch (int& index) {
 			cerr << "Error <Current index don't find>" << endl;
-			cout << "Return the element of maximum masive index [" << index << "] = " << rn2[index] << endl;
-		}		
+			cout << "Return the element of maximum masive index [" << index << "] = " << rn1[index] << endl;
+		}	
+
+		try {
+			p = new RealNumber[10];
+		}
+		catch (ExceptionAlloc& er) {
+			er.Error();
+			abort();
+		}
 
 		if (work != 0) {
 			cout << "\nRetry? 1 - yes / 0 - no" << endl;
